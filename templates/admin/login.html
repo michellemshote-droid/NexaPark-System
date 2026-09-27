@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin Login — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">ADMIN ACCESS</p><h1>Sign in to the admin dashboard.</h1><p>Only authorised administrators can access operational data and controls.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('admin_login_post') }}">
+        <label>Username<input name="username" required autocomplete="username" autofocus></label>
+        <label>Password<input type="password" name="password" required autocomplete="current-password"></label>
+        <button class="btn primary wide" type="submit">Sign In</button>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

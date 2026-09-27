@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Parking Confirmed — NexaPark{% endblock %}
+{% block content %}
+<div class="success-page">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">VEHICLE RECORDED</p>
+    <h1>{% if result.valet_requested %}Valet check-in confirmed.{% else %}Parking confirmed.{% endif %}</h1>
+    <p class="muted">{% if result.valet_requested %}Our valet team has your vehicle. Your booking included valet service, so KSh 100 is included in your final parking charges.{% else %}Please proceed to your allocated space.{% endif %}</p>
+    <div class="summary-grid card">
+        <div><small>Vehicle</small><strong>{{ result.plate }}</strong></div>
+        <div><small>Slot</small><strong>{{ result.slot }}</strong></div>
+        <div><small>Entry time</small><strong>{{ result.entry_time }}</strong></div>
+        {% if result.booking_reference %}<div><small>Booking</small><strong>{{ result.booking_reference }}</strong></div>{% endif %}
+        {% if result.valet_requested %}<div><small>Valet fee</small><strong>KSh 100</strong></div>{% endif %}
+    </div>
+    <a class="btn primary" href="{{ url_for('home') }}">Back to parking map</a>
+</div>
+{% endblock %}

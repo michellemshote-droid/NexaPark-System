@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Vehicle Exit — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">VEHICLE EXIT</p><h1>Let's calculate your parking fee.</h1><p>Enter the plate used when the vehicle entered.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('exit_vehicle') }}">
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <button class="btn primary wide" type="submit">Calculate Fee</button>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Booking Payment — NexaPark{% endblock %}
+{% block content %}
+<div class="success-page">
+    <div class="success-icon">↗</div>
+    <p class="eyebrow">M-PESA BOOKING DEPOSIT</p>
+    <h1>Complete your 50% deposit.</h1>
+    <p class="muted">An M-Pesa payment prompt has been sent to {{ phone_number }}. Complete it on your phone. Your bay is confirmed only after Safaricom confirms the payment.</p>
+    <div class="summary-grid card">
+        <div><small>Reference</small><strong>{{ result.reference }}</strong></div>
+        <div><small>Vehicle</small><strong>{{ result.plate }}</strong></div>
+        <div><small>Parking</small><strong>KSh {{ result.parking_fee }}</strong></div>
+        <div><small>Valet</small><strong>KSh {{ result.valet_fee }}</strong></div>
+        <div><small>Total</small><strong>KSh {{ result.total_price }}</strong></div>
+        <div><small>Pay now</small><strong>KSh {{ result.deposit_amount }}</strong></div>
+        <div><small>Balance at exit</small><strong>KSh {{ result.balance_amount }}</strong></div>
+        <div><small>Status</small><strong id="booking-status">Waiting for payment…</strong></div>
+    </div>
+    <p class="muted">If the prompt does not appear, check that your phone number is registered for M-Pesa and try again from the booking page.</p>
+    <a class="btn secondary" href="{{ url_for('home') }}">Return Home</a>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+    const status = document.getElementById('booking-status');
+    const url = {{ url_for('booking_payment_status', checkout_request_id=mpesa_response.CheckoutRequestID)|tojson }};
+    let attempts = 0;
+    const timer = setInterval(async () => {
+        attempts += 1;
+        try {
+            const response = await fetch(url, {cache: 'no-store'});
+            const data = await response.json();
+            if (data.status === 'PAID') {
+                clearInterval(timer);
+                status.textContent = 'Confirmed ✓';
+                window.location.href = {{ url_for('book_success_page', reference=result.reference)|tojson }};
+            } else if (data.status === 'FAILED' || data.status === 'CANCELLED') {
+                clearInterval(timer);
+                status.textContent = 'Payment not completed';
+            }
+        } catch (e) {}
+        if (attempts >= 30) clearInterval(timer);
+    }, 2000);
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Pre-book a Bay — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">PRE-BOOK A BAY</p><h1>Reserve your space in advance.</h1><p>Choose your arrival window and services. A 50% deposit is required before the bay is confirmed.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('book') }}">
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <label>Vehicle Type
+            <select name="vehicle_type">
+                <option>Car</option><option>SUV</option><option>Van</option><option>Motorcycle</option><option>Other</option>
+            </select>
+        </label>
+        <label>Arrival<input type="datetime-local" name="start" id="start" required></label>
+        <label>Departure<input type="datetime-local" name="end" id="end" required></label>
+        <label class="checkbox-row">
+            <input type="checkbox" name="valet_requested" value="yes" id="valet_requested">
+            <span><strong>Add valet service</strong><small>Valet service adds KSh 100 to the booking total.</small></span>
+        </label>
+        <div class="card summary-card" style="margin:0;">
+            <div class="summary-row"><span>Estimated parking</span><strong id="parking-fee">KSh 0</strong></div>
+            <div class="summary-row"><span>Valet service</span><strong id="valet-fee">KSh 0</strong></div>
+            <div class="summary-total"><span>Estimated total</span><strong id="total-price">KSh 0</strong></div>
+            <div class="summary-row"><span>50% deposit</span><strong id="deposit-price">KSh 0</strong></div>
+            <div class="summary-row"><span>Balance on exit</span><strong id="balance-price">KSh 0</strong></div>
+        </div>
+        <label>M-Pesa Phone Number<input name="phone_number" type="tel" placeholder="0712345678" required maxlength="13" autocomplete="tel"></label>
+        <small>After you submit, NexaPark will send an M-Pesa STK prompt to this number. The booking is confirmed only after the 50% deposit is received.</small>
+        <button class="btn primary wide" type="submit">Confirm &amp; Pay 50% Deposit</button>
+        <a class="btn secondary wide" href="{{ url_for('book_cancel_page') }}">Need to cancel a booking?</a>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+    const start = document.getElementById('start');
+    const end = document.getElementById('end');
+    const valet = document.getElementById('valet_requested');
+    const parkingEl = document.getElementById('parking-fee');
+    const valetEl = document.getElementById('valet-fee');
+    const totalEl = document.getElementById('total-price');
+    const depositEl = document.getElementById('deposit-price');
+    const balanceEl = document.getElementById('balance-price');
+
+    function baseFee(minutes) {
+        if (minutes <= 30) return 0;
+        if (minutes <= 120) return 50;
+        if (minutes <= 240) return 100;
+        if (minutes <= 360) return 300;
+        return 500;
+    }
+
+    function update() {
+        if (!start.value || !end.value) return;
+        const minutes = Math.floor((new Date(end.value) - new Date(start.value)) / 60000);
+        if (minutes < 0) return;
+        const parking = baseFee(minutes);
+        const valetFee = valet.checked ? 100 : 0;
+        const total = parking + valetFee;
+        const deposit = Math.floor(total / 2);
+        parkingEl.textContent = `KSh ${parking}`;
+        valetEl.textContent = `KSh ${valetFee}`;
+        totalEl.textContent = `KSh ${total}`;
+        depositEl.textContent = `KSh ${deposit}`;
+        balanceEl.textContent = `KSh ${total - deposit}`;
+    }
+
+    start.addEventListener('change', update);
+    end.addEventListener('change', update);
+    valet.addEventListener('change', update);
+})();
+</script>
+{% endblock %}

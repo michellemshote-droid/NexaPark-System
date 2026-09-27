@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% block title %}Parking Slots — NexaPark{% endblock %}
+{% block admin_heading %}Parking Slots{% endblock %}
+{% block admin_content %}
+<div class="card table-card"><div class="panel-head"><h2>Live parking status</h2><span>{{ slots|length }} spaces</span></div>
+<table><thead><tr><th>Slot</th><th>Status</th><th>Vehicle</th><th>Type</th><th>Entry</th></tr></thead><tbody>
+{% for s in slots %}<tr><td><strong>{{ s.slot_number }}</strong></td><td><span class="status {{ s.status|lower }}">{{ s.status }}</span></td><td>{{ s.plate_number or '—' }}</td><td>{{ s.vehicle_type or '—' }}</td><td>{{ s.entry_time or '—' }}</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

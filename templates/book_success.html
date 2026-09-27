@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Booking Confirmed — NexaPark{% endblock %}
+{% block content %}
+<div class="success-page">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">BAY RESERVED</p>
+    <h1>Booking confirmed.</h1>
+    <p class="muted">Your 50% deposit has been received. Keep your reference and arrive with the same plate number.</p>
+    <div class="summary-grid card">
+        <div><small>Reference</small><strong>{{ result.reference }}</strong></div>
+        <div><small>Vehicle</small><strong>{{ result.plate }}</strong></div>
+        <div><small>Arrival</small><strong>{{ result.requested_start }}</strong></div>
+        <div><small>Departure</small><strong>{{ result.requested_end }}</strong></div>
+        <div><small>Parking</small><strong>KSh {{ result.parking_fee }}</strong></div>
+        <div><small>Valet</small><strong>KSh {{ result.valet_fee }}</strong></div>
+        <div><small>Total</small><strong>KSh {{ result.total_price }}</strong></div>
+        <div><small>Paid now</small><strong>KSh {{ result.deposit_amount }}</strong></div>
+        <div><small>Balance at exit</small><strong>KSh {{ result.balance_amount }}</strong></div>
+    </div>
+    <a class="btn primary" href="{{ url_for('home') }}">Back to Home</a>
+</div>
+{% endblock %}

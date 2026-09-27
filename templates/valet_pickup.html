@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Request Valet Pickup — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">VALET PICKUP</p><h1>Request your vehicle.</h1><p>We'll start bringing your car to the pickup point.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('valet_pickup') }}">
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <button class="btn primary wide" type="submit">Request Pickup</button>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

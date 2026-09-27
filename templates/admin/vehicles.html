@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% block title %}Vehicles — NexaPark{% endblock %}
+{% block admin_heading %}Vehicles Inside{% endblock %}
+{% block admin_content %}
+<div class="card table-card"><div class="panel-head"><h2>Active vehicles</h2><span>{{ vehicles|length }} inside</span></div>
+<table><thead><tr><th>Plate</th><th>Type</th><th>Slot</th><th>Entry time</th></tr></thead><tbody>
+{% for v in vehicles %}<tr><td><strong>{{ v.plate_number }}</strong></td><td>{{ v.vehicle_type }}</td><td>{{ v.slot_number }}</td><td>{{ v.entry_time }}</td></tr>{% else %}<tr><td colspan="4">No vehicles are currently inside.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

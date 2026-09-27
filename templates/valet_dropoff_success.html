@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Vehicle With Valet — NexaPark{% endblock %}
+{% block content %}
+<div class="success-page">
+    <div class="success-icon">✓</div><p class="eyebrow">VALET RECEIVED</p><h1>Your car is being parked.</h1>
+    <p class="muted">A KSh 100 valet fee has been added to your parking charges. Request a pickup any time before you leave.</p>
+    <div class="summary-grid card"><div><small>Vehicle</small><strong>{{ result.plate }}</strong></div><div><small>Slot</small><strong>{{ result.slot }}</strong></div><div><small>Entry time</small><strong>{{ result.entry_time }}</strong></div><div><small>Valet fee</small><strong>KSh 100</strong></div></div>
+    <a class="btn primary" href="{{ url_for('valet_pickup_page') }}">Request Pickup</a><a class="btn secondary" href="{{ url_for('home') }}">Back to Home</a>
+</div>
+{% endblock %}

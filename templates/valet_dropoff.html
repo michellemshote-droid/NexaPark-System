@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Valet Drop-off — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">VALET DROP-OFF</p><h1>Hand over your keys.</h1><p>Our valet team will park your vehicle for you. Valet service adds <strong>KSh 100</strong> to your parking total and is included when you pay at exit.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('valet_dropoff') }}">
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <label>Vehicle Type
+            <select name="vehicle_type"><option>Car</option><option>SUV</option><option>Van</option><option>Motorcycle</option><option>Other</option></select>
+        </label>
+        <label>Drop-off Note<input name="drop_off_location" placeholder="e.g. Main entrance, red canopy" maxlength="200" autocomplete="off"></label>
+        <div class="card summary-card" style="margin:0;"><div class="summary-row"><span>Valet service</span><strong>KSh 100</strong></div><div class="summary-row"><span>Payment</span><strong>At vehicle exit</strong></div></div>
+        <button class="btn primary wide" type="submit">Confirm Drop-off</button>
+        <a class="btn secondary wide" href="{{ url_for('valet_pickup_page') }}">Requesting a pickup instead?</a>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

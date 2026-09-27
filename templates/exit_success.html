@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Exit Complete — NexaPark{% endblock %}
+{% block content %}
+<div class="success-page">
+    <div class="success-icon">✓</div>
+    <p class="eyebrow">PAYMENT SUCCESSFUL</p>
+    <h1>You're cleared to exit.</h1>
+    <p class="muted">The barrier-open action is simulated in this software version.</p>
+    <div class="summary-grid card">
+        <div><small>Vehicle</small><strong>{{ result.plate }}</strong></div>
+        <div><small>Duration</small><strong>{{ result.duration_text }}</strong></div>
+        <div><small>Parking</small><strong>KSh {{ result.parking_fee }}</strong></div>
+        <div><small>Valet</small><strong>KSh {{ result.valet_fee }}</strong></div>
+        {% if result.booking_deposit_paid %}<div><small>Deposit paid</small><strong>KSh {{ result.booking_deposit_paid }}</strong></div>{% endif %}
+        <div><small>Paid now</small><strong>KSh {{ result.amount_due }}</strong></div>
+        <div><small>Total charges</small><strong>KSh {{ result.fee }}</strong></div>
+        <div><small>Barrier</small><strong>OPEN</strong></div>
+    </div>
+    <a class="btn primary" href="{{ url_for('home') }}">Return Home</a>
+</div>
+{% endblock %}

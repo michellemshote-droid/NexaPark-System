@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}NexaPark Kenya{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="{{ url_for('home') }}"><span>◈</span> NexaPark <small>KENYA</small></a>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('entry_page') }}">Enter</a>
+        <a href="{{ url_for('exit_page') }}">Exit</a>
+        <a href="{{ url_for('book_page') }}">Pre-book</a>
+        <a href="{{ url_for('valet_dropoff_page') }}">Valet</a>
+        <a class="admin-link" href="{{ url_for('admin_login') }}">Admin</a>
+    </nav>
+</header>
+
+<main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer>NexaPark Kenya · Modern Car Parking System</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

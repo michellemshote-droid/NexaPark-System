@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block title %}Admin Dashboard — NexaPark{% endblock %}
+{% block admin_heading %}Dashboard{% endblock %}
+{% block admin_content %}
+<div class="stat-grid">
+    <div class="stat-card"><span>Total spaces</span><strong>{{ stats.total }}</strong></div>
+    <div class="stat-card"><span>Available</span><strong>{{ stats.available }}</strong></div>
+    <div class="stat-card"><span>Occupied</span><strong>{{ stats.occupied }}</strong></div>
+    <div class="stat-card accent"><span>Today's revenue</span><strong>KSh {{ stats.today_revenue }}</strong></div>
+</div>
+<div class="two-col">
+    <section class="card admin-panel"><div class="panel-head"><h2>Live slot map</h2><a href="{{ url_for('admin_slots') }}">View all</a></div><div class="slot-grid compact">{% for slot in slots %}<div class="slot-card {{ 'free' if slot.status == 'AVAILABLE' else 'busy' }}"><strong>{{ slot.slot_number }}</strong><span>{{ slot.status }}</span></div>{% endfor %}</div></section>
+    <section class="card admin-panel"><div class="panel-head"><h2>Today's activity</h2></div><div class="activity"><div><span>Vehicles entered</span><strong>{{ stats.entered_today }}</strong></div><div><span>Vehicles exited</span><strong>{{ stats.exited_today }}</strong></div><div><span>Currently inside</span><strong>{{ stats.inside }}</strong></div></div></section>
+</div>
+{% endblock %}

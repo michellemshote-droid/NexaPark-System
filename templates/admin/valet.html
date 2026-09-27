@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% block title %}Valet — NexaPark{% endblock %}
+{% block admin_heading %}Valet Operations{% endblock %}
+{% block admin_content %}
+<div class="card table-card"><div class="panel-head"><h2>Valet-parked vehicles</h2><span>{{ valet_requests|length }} total</span></div>
+<table><thead><tr><th>Plate</th><th>Type</th><th>Slot</th><th>Drop-off note</th><th>Status</th><th>Requested</th><th>Action</th></tr></thead><tbody>
+{% for r in valet_requests %}<tr>
+<td><strong>{{ r.plate_number }}</strong></td>
+<td>{{ r.vehicle_type }}</td>
+<td>{{ r.slot_number }}</td>
+<td>{{ r.drop_off_location or '—' }}</td>
+<td><span class="status {{ r.status|lower }}">{{ r.status }}</span></td>
+<td>{{ r.pickup_requested_at or '—' }}</td>
+<td>
+{% if r.status == 'PARKED' %}
+<form method="post" action="{{ url_for('admin_valet_retrieve', valet_id=r.valet_id) }}"><button class="btn secondary" type="submit">Start Retrieving</button></form>
+{% elif r.status == 'RETRIEVING' %}
+<form method="post" action="{{ url_for('admin_valet_deliver', valet_id=r.valet_id) }}"><button class="btn primary" type="submit">Mark Delivered</button></form>
+{% else %}
+—
+{% endif %}
+</td>
+</tr>{% else %}<tr><td colspan="7">No valet activity yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

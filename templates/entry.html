@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Vehicle Entry — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">VEHICLE ENTRY</p><h1>Register your vehicle.</h1><p>We'll assign an available parking slot and record the entry time.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('entry') }}">
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <label>Vehicle Type
+            <select name="vehicle_type">
+                <option>Car</option><option>SUV</option><option>Van</option><option>Motorcycle</option><option>Other</option>
+            </select>
+        </label>
+        <button class="btn primary wide" type="submit">Confirm Parking</button>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

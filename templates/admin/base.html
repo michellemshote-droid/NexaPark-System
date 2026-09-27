@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-shell">
+    <aside class="sidebar">
+        <div class="side-brand">◈ NexaPark <small>ADMIN</small></div>
+        <nav>
+            <a href="{{ url_for('admin_dashboard_page') }}">Dashboard</a>
+            <a href="{{ url_for('admin_slots') }}">Parking Slots</a>
+            <a href="{{ url_for('admin_vehicles') }}">Vehicles</a>
+            <a href="{{ url_for('admin_bookings') }}">Bookings</a>
+            <a href="{{ url_for('admin_valet') }}">Valet</a>
+            <a href="{{ url_for('admin_payments') }}">Payments</a>
+            <a href="{{ url_for('admin_history') }}">History</a>
+            <a href="{{ url_for('admin_reports') }}">Reports</a>
+        </nav>
+        <form method="post" action="{{ url_for('admin_logout') }}"><button class="logout">Log out</button></form>
+    </aside>
+    <section class="admin-content">
+        <div class="admin-top"><div><p class="eyebrow">ADMIN CENTRE</p><h1>{% block admin_heading %}Dashboard{% endblock %}</h1></div><div class="user-chip">● {{ session.get('admin_username') }}</div></div>
+        {% block admin_content %}{% endblock %}
+    </section>
+</div>
+{% endblock %}

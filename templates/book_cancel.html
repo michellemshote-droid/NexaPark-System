@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Cancel a Booking — NexaPark{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="form-intro"><p class="eyebrow">CANCEL BOOKING</p><h1>Cancel a pre-booking.</h1><p>Enter your booking reference and the plate it was made with.</p></div>
+    <form class="card form-card" method="post" action="{{ url_for('book_cancel') }}">
+        <label>Booking Reference<input name="reference" placeholder="e.g. BK-4F2A9C" required autocomplete="off"></label>
+        <label>Vehicle Number Plate<input name="plate" placeholder="e.g. KDA 123A" required maxlength="12" autocomplete="off"></label>
+        <button class="btn primary wide" type="submit">Cancel Booking</button>
+        <a class="btn secondary wide" href="{{ url_for('home') }}">Back to Home</a>
+    </form>
+</div>
+{% endblock %}

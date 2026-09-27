@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% block title %}Reports — NexaPark{% endblock %}
+{% block admin_heading %}Daily Report{% endblock %}
+{% block admin_content %}
+<div class="stat-grid">
+    <div class="stat-card"><span>Today's sessions</span><strong>{{ report.total_sessions or 0 }}</strong></div>
+    <div class="stat-card"><span>Completed</span><strong>{{ report.completed_sessions or 0 }}</strong></div>
+    <div class="stat-card"><span>Free visits</span><strong>{{ report.free_visits or 0 }}</strong></div>
+    <div class="stat-card accent"><span>Revenue</span><strong>KSh {{ report.revenue or 0 }}</strong></div>
+</div>
+<div class="card report-note"><h2>Operational summary</h2><p>Paid visits: <strong>{{ report.paid_visits or 0 }}</strong>. Active sessions from today: <strong>{{ report.active_sessions or 0 }}</strong>.</p></div>
+{% endblock %}

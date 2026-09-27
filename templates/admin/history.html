@@ -1,0 +1,9 @@
+{% extends "admin/base.html" %}
+{% block title %}Parking History — NexaPark{% endblock %}
+{% block admin_heading %}Parking History{% endblock %}
+{% block admin_content %}
+<div class="card table-card"><div class="panel-head"><h2>All parking sessions</h2></div>
+<table><thead><tr><th>Vehicle</th><th>Type</th><th>Slot</th><th>Entry</th><th>Exit</th><th>Duration</th><th>Fee</th><th>Status</th></tr></thead><tbody>
+{% for h in history %}<tr><td><strong>{{ h.plate_number }}</strong></td><td>{{ h.vehicle_type }}</td><td>{{ h.slot_number }}</td><td>{{ h.entry_time }}</td><td>{{ h.exit_time or '—' }}</td><td>{{ h.duration_minutes if h.duration_minutes is not none else '—' }} min</td><td>{% if h.fee is not none %}KSh {{ h.fee }}{% else %}—{% endif %}</td><td><span class="status {{ h.status|lower }}">{{ h.status }}</span></td></tr>{% else %}<tr><td colspan="8">No parking history yet.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}
