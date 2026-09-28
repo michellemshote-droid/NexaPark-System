@@ -2,21 +2,22 @@
 
 A Flask + SQLite web-based parking management system.
 
-## 1. Main features
+## 1. Main Features
 
-### Customer features
+### Customer Features
 
 - View live parking-slot availability from the home page.
 - Register a vehicle at the parking entrance.
 - Automatically assign an available parking bay.
 - Calculate parking duration and parking fees at exit.
-- Complete a simulated payment and release the parking bay.
+- Complete a payment and release the parking bay.
 - Pre-book parking capacity for a future arrival/departure window.
 - Cancel a booking using the booking reference and vehicle plate.
 - Use valet drop-off instead of parking the vehicle yourself.
 - Request valet pickup when the vehicle is ready to be returned.
+- Make M-Pesa payments through the Safaricom Daraja API.
 
-### Admin features
+### Admin Features
 
 The authenticated admin dashboard provides access to:
 
@@ -33,66 +34,68 @@ The admin area is protected by a username and password.
 
 ---
 
-## 2. Technology used
+# 2. Technology Used
 
 - **Python 3** — application programming language
 - **Flask** — web framework
 - **SQLite** — local database
 - **HTML/CSS/JavaScript** — web interface
 - **Werkzeug** — password hashing and related Flask security utilities
+- **Safaricom M-Pesa Daraja API** — M-Pesa STK Push and payment callbacks
+- **ngrok** — used during local development to expose the M-Pesa callback endpoint publicly
 
 No separate MySQL/PostgreSQL server is required for this local application.
 
 ---
 
-# 3. Project structure
+# 3. Project Structure
 
 ```text
 modern-car-parking-system/
 │
-├── app.py                    # Main Flask application and routes
-├── auth.py                   # Admin authentication and password checks
-├── database.py               # SQLite database setup and queries
-├── parking.py                # Parking, booking and valet business logic
-├── pricing.py                # Parking-fee calculation
-├── requirements.txt          # Python dependencies
-├── README.md                 # Project documentation
+├── app.py                         # Main Flask application and routes
+├── auth.py                        # Admin authentication and password checks
+├── database.py                    # SQLite database setup and queries
+├── parking.py                     # Parking, booking and valet business logic
+├── pricing.py                     # Parking-fee calculation
+├── requirements.txt               # Python dependencies
+├── README.md                      # Project documentation
 │
 ├── database/
-│   └── .gitkeep              # Database folder; parking.db is created here
+│   └── .gitkeep                   # Database folder; parking.db is created here
 │
 ├── static/
 │   ├── css/
-│   │   └── style.css        # Website styling
+│   │   └── style.css              # Website styling
 │   └── js/
-│       └── main.js           # Client-side JavaScript
+│       └── main.js                # Client-side JavaScript
 │
 └── templates/
-    ├── base.html             # Shared customer-page layout/navigation
-    ├── index.html            # Home page
-    ├── entry.html            # Vehicle entry form
-    ├── entry_success.html    # Successful entry result
-    ├── exit.html             # Vehicle exit form
-    ├── payment.html          # Exit/payment confirmation
-    ├── exit_success.html     # Successful exit result
-    ├── book.html             # Pre-booking form
-    ├── book_success.html     # Booking confirmation
-    ├── book_cancel.html      # Booking cancellation form
-    ├── valet_dropoff.html    # Valet drop-off form
-    ├── valet_dropoff_success.html
-    ├── valet_pickup.html     # Valet pickup request form
+    ├── base.html                  # Shared customer-page layout/navigation
+    ├── index.html                 # Home page
+    ├── entry.html                 # Vehicle entry form
+    ├── entry_success.html         # Successful entry result
+    ├── exit.html                  # Vehicle exit form
+    ├── payment.html               # Exit/payment confirmation
+    ├── exit_success.html          # Successful exit result
+    ├── book.html                  # Pre-booking form
+    ├── book_success.html          # Booking confirmation
+    ├── book_cancel.html           # Booking cancellation form
+    ├── valet_dropoff.html         # Valet drop-off form
+    ├── valet_dropoff_success.html # Successful valet drop-off
+    ├── valet_pickup.html          # Valet pickup request form
     │
     └── admin/
-        ├── base.html         # Shared admin layout
-        ├── login.html        # Admin login
-        ├── dashboard.html   # Admin dashboard
-        ├── vehicles.html    # Active vehicles
-        ├── slots.html       # Slot monitoring
-        ├── bookings.html    # Booking management
-        ├── valet.html       # Valet management
-        ├── payments.html    # Payment records
-        ├── history.html     # Parking history
-        └── reports.html     # Reports
+        ├── base.html              # Shared admin layout
+        ├── login.html             # Admin login
+        ├── dashboard.html         # Admin dashboard
+        ├── vehicles.html          # Active vehicles
+        ├── slots.html             # Slot monitoring
+        ├── bookings.html          # Booking management
+        ├── valet.html             # Valet management
+        ├── payments.html          # Payment records
+        ├── history.html           # Parking history
+        └── reports.html           # Reports
 ```
 
 ---
@@ -109,11 +112,11 @@ The project does not require Node.js, XAMPP, MySQL or a separate database server
 
 ---
 
-# 5. Cross-platform setup
+# 5. Cross-Platform Setup
 
 NexaPark is a Python/Flask application and can be developed on **Windows, Linux, or macOS**. The application itself is not tied to one operating system.
 
-The commands differ mainly when creating/activating the Python virtual environment. Choose the section that matches your operating system.
+The commands differ mainly when creating and activating the Python virtual environment. Choose the section that matches your operating system.
 
 ## 5.1 Windows — PowerShell
 
@@ -135,7 +138,7 @@ If `python` is not available, try:
 py --version
 ```
 
-### Step 2 — Create a virtual environment
+### Step 2 — Create a Virtual Environment
 
 ```powershell
 python -m venv .venv
@@ -147,7 +150,7 @@ If your system uses the Python launcher instead:
 py -m venv .venv
 ```
 
-### Step 3 — Activate the environment
+### Step 3 — Activate the Environment
 
 ```powershell
 .venv\Scripts\activate.ps1
@@ -161,14 +164,14 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
 Then run the activation command again.
 
-### Step 4 — Install dependencies
+### Step 4 — Install Dependencies
 
 ```powershell
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Step 5 — Create the first admin account
+### Step 5 — Create the First Admin Account
 
 ```powershell
 flask --app app.py create-admin
@@ -196,7 +199,7 @@ Open the local address shown by Flask, normally:
 http://127.0.0.1:5000/
 ```
 
-### Step 7 — Stop the server
+### Step 7 — Stop the Server
 
 Press `Ctrl + C` in the terminal running Flask.
 
@@ -206,11 +209,17 @@ The same project can be run from Command Prompt:
 
 ```cmd
 cd path\to\modern-car-parking-system
+
 python -m venv .venv
+
 .venv\Scripts\activate
+
 python -m pip install --upgrade pip
+
 pip install -r requirements.txt
+
 flask --app app.py create-admin
+
 python app.py
 ```
 
@@ -273,12 +282,19 @@ Open Terminal and move into the project folder:
 
 ```bash
 cd /path/to/modern-car-parking-system
+
 python3 --version
+
 python3 -m venv .venv
+
 source .venv/bin/activate
+
 python -m pip install --upgrade pip
+
 pip install -r requirements.txt
+
 flask --app app.py create-admin
+
 python app.py
 ```
 
@@ -288,7 +304,7 @@ Then open:
 http://127.0.0.1:5000/
 ```
 
-## 5.5 Setup scripts included with the project
+## 5.5 Setup Scripts Included with the Project
 
 For convenience, the project includes platform-specific setup scripts:
 
@@ -301,11 +317,11 @@ These scripts automate the virtual-environment and dependency-installation steps
 
 ---
 
-# 6. Configuration and environment variables
+# 6. Configuration and Environment Variables
 
-NexaPark can receive configuration through environment variables. This is useful when deploying the application or when you do not want secrets written into source code.
+NexaPark can receive configuration through environment variables. This is useful when deploying the application or when you do not want secrets written directly into source code.
 
-## Admin account variables
+## Admin Account Variables
 
 If both variables are supplied, the application can create the account once when it starts:
 
@@ -314,6 +330,7 @@ If both variables are supplied, the application can create the account once when
 ```powershell
 $env:NEXAPARK_ADMIN_USERNAME="admin"
 $env:NEXAPARK_ADMIN_PASSWORD="YourOwnStrongPasswordHere"
+
 python app.py
 ```
 
@@ -322,16 +339,17 @@ python app.py
 ```bash
 export NEXAPARK_ADMIN_USERNAME="admin"
 export NEXAPARK_ADMIN_PASSWORD="YourOwnStrongPasswordHere"
+
 python app.py
 ```
 
 The interactive `flask --app app.py create-admin` command is usually easier for local development. Existing admin accounts are not overwritten automatically.
 
-Treat passwords and secret keys as secrets. Do not commit them to GitHub or place them directly in source code.
+Treat passwords and secret keys as secrets. Do not commit credentials or secret values to GitHub or place them directly in source code.
 
-## Application secret key
+## Application Secret Key
 
-For deployment, set a strong secret key:
+For deployment, set a strong secret key.
 
 ### PowerShell
 
@@ -363,9 +381,9 @@ Debug mode is disabled by default. For local development only, it can be enabled
 
 ---
 
-# 7. Customer workflow
+# 7. Customer Workflow
 
-## A. Normal parking entry
+## A. Normal Parking Entry
 
 1. Open the home page.
 2. Select **Enter Parking**.
@@ -375,7 +393,7 @@ Debug mode is disabled by default. For local development only, it can be enabled
 6. NexaPark checks available capacity and assigns an available bay.
 7. The entry time and assigned bay are displayed.
 
-## B. Vehicle exit
+## B. Vehicle Exit
 
 1. Select **Vehicle Exit**.
 2. Enter the same vehicle plate number used at entry.
@@ -385,17 +403,17 @@ Debug mode is disabled by default. For local development only, it can be enabled
 6. The application records the payment and completes the parking session.
 7. The occupied bay is released.
 
-The payment and barrier step is currently **simulated**. No real M-Pesa transaction or physical barrier is connected yet.
+For the current software implementation, the physical parking barrier is not connected to the application. The software records the payment and completes the exit workflow.
 
 ---
 
-# 8. Parking pricing
+# 8. Parking Pricing
 
 The fee rules are defined in `pricing.py`.
 
 The current pricing model is:
 
-| Parking duration  |     Fee |
+| Parking Duration  |     Fee |
 | ----------------- | ------: |
 | Up to 30 minutes  |   KSh 0 |
 | Up to 2 hours     |  KSh 50 |
@@ -407,7 +425,7 @@ If the pricing rules are changed, edit `pricing.py` rather than changing the HTM
 
 ---
 
-# 9. Online pre-booking
+# 9. Online Pre-Booking
 
 NexaPark adds online parking-capacity booking through `/book`.
 
@@ -417,10 +435,11 @@ A customer supplies:
 - Vehicle type
 - Requested arrival time
 - Requested departure time
+- Optional valet service
 
-If capacity is available for the requested period, the system creates a booking reference.
+If capacity is available for the requested period, the system creates a booking and proceeds through the configured payment process.
 
-### Important design detail
+## Important Design Detail
 
 NexaPark reserves **parking capacity**, not a specific bay number.
 
@@ -428,17 +447,17 @@ For example, if the facility has 20 bays and 5 compatible bookings overlap durin
 
 This avoids changing the existing bay-allocation logic unnecessarily.
 
-### Booking at entry
+## Booking at Entry
 
 When a vehicle arrives, NexaPark checks whether its plate has a confirmed booking whose window has started. If so, the booking is linked to the new parking session automatically.
 
 Walk-in vehicles can still enter when capacity allows.
 
-### No-shows
+## No-Shows
 
 Confirmed bookings that pass their departure time without being checked in can be marked `NO_SHOW`, releasing the reserved capacity.
 
-### Cancel a booking
+## Cancel a Booking
 
 Use:
 
@@ -450,11 +469,11 @@ The customer must provide the booking reference and the plate number used for th
 
 ---
 
-# 10. Valet parking
+# 10. Valet Parking
 
 NexaPark adds a separate valet workflow.
 
-## Valet drop-off
+## Valet Drop-Off
 
 Customer page:
 
@@ -470,7 +489,7 @@ The customer provides:
 
 The system records the vehicle as a valet parking session while still using the same parking-capacity rules as normal parking.
 
-## Request valet pickup
+## Request Valet Pickup
 
 Customer page:
 
@@ -486,7 +505,7 @@ The valet status moves through:
 PARKED → RETRIEVING → DELIVERED
 ```
 
-## Admin valet control
+## Admin Valet Control
 
 Admin page:
 
@@ -500,7 +519,7 @@ After the vehicle is returned, the customer still uses the normal **Vehicle Exit
 
 ---
 
-# 11. Admin dashboard
+# 11. Admin Dashboard
 
 Open:
 
@@ -523,7 +542,7 @@ After successful authentication, the admin can access:
 
 Unauthenticated users are redirected to the admin login page when attempting to access protected admin pages.
 
-### Account security
+## Account Security
 
 - Passwords are stored as salted password hashes rather than plain text.
 - Admin sessions use HTTP-only cookies.
@@ -537,18 +556,18 @@ Unauthenticated users are redirected to the admin login page when attempting to 
 
 When the server is running locally:
 
-| Page            | URL                                     |
-| --------------- | --------------------------------------- |
-| Home            | `http://127.0.0.1:5000/`                |
-| Enter Parking   | `http://127.0.0.1:5000/entry`           |
-| Vehicle Exit    | `http://127.0.0.1:5000/exit`            |
-| Pre-book a Bay  | `http://127.0.0.1:5000/book`            |
-| Cancel Booking  | `http://127.0.0.1:5000/book/cancel`     |
-| Valet Drop-off  | `http://127.0.0.1:5000/valet/dropoff`   |
-| Valet Pickup    | `http://127.0.0.1:5000/valet/pickup`    |
-| Admin Login     | `http://127.0.0.1:5000/admin/login`     |
-| Admin Dashboard | `http://127.0.0.1:5000/admin/dashboard` |
-| Slot API        | `http://127.0.0.1:5000/api/slots`       |
+| Page            | URL                                                                            |
+| --------------- | ------------------------------------------------------------------------------ |
+| Home            | [http://127.0.0.1:5000/](http://127.0.0.1:5000/)                               |
+| Enter Parking   | [http://127.0.0.1:5000/entry](http://127.0.0.1:5000/entry)                     |
+| Vehicle Exit    | [http://127.0.0.1:5000/exit](http://127.0.0.1:5000/exit)                       |
+| Pre-book a Bay  | [http://127.0.0.1:5000/book](http://127.0.0.1:5000/book)                       |
+| Cancel Booking  | [http://127.0.0.1:5000/book/cancel](http://127.0.0.1:5000/book/cancel)         |
+| Valet Drop-off  | [http://127.0.0.1:5000/valet/dropoff](http://127.0.0.1:5000/valet/dropoff)     |
+| Valet Pickup    | [http://127.0.0.1:5000/valet/pickup](http://127.0.0.1:5000/valet/pickup)       |
+| Admin Login     | [http://127.0.0.1:5000/admin/login](http://127.0.0.1:5000/admin/login)         |
+| Admin Dashboard | [http://127.0.0.1:5000/admin/dashboard](http://127.0.0.1:5000/admin/dashboard) |
+| Slot API        | [http://127.0.0.1:5000/api/slots](http://127.0.0.1:5000/api/slots)             |
 
 ---
 
@@ -564,7 +583,7 @@ database/parking.db
 
 On startup, the application initializes the required tables and parking slots.
 
-If an older NexaPark database already exists, the application contains initialization logic for the newer tables/columns used by bookings and valet operations.
+If an older NexaPark database already exists, the application contains initialization logic for the newer tables and columns used by bookings and valet operations.
 
 For a clean development test, you can remove the local `database/parking.db` and start the application again. This will reset the local test data, so do not do this if you need to preserve existing records.
 
@@ -572,33 +591,33 @@ For a clean development test, you can remove the local `database/parking.db` and
 
 # 14. Troubleshooting
 
-## `python` is not recognized
+## `python` Is Not Recognized
 
 Try:
 
-```bat
+```powershell
 py --version
 ```
 
 If Python is installed but the `python` command is unavailable, use `py` in the commands or reinstall Python with the option to add it to PATH.
 
-## `pip install -r requirements.txt` fails
+## `pip install -r requirements.txt` Fails
 
 Make sure the virtual environment is active:
 
-```bat
+```powershell
 .venv\Scripts\activate
 ```
 
 Then try:
 
-```bat
+```powershell
 python -m pip install -r requirements.txt
 ```
 
 An internet connection is normally required when installing Flask and Werkzeug for the first time.
 
-## The browser says the page cannot be reached
+## The Browser Says the Page Cannot Be Reached
 
 Make sure Flask is still running in the terminal and that you opened the exact address printed by Flask, normally:
 
@@ -606,21 +625,21 @@ Make sure Flask is still running in the terminal and that you opened the exact a
 http://127.0.0.1:5000/
 ```
 
-## Admin login does not work
+## Admin Login Does Not Work
 
 If no admin account has been created, run:
 
-```bat
+```powershell
 flask --app app.py create-admin
 ```
 
 Then create the username and password interactively.
 
-## Port 5000 is already in use
+## Port 5000 Is Already in Use
 
 Stop the other Flask application using that port, or change the development configuration before starting the server.
 
-## I changed HTML/CSS but cannot see the change
+## I Changed HTML/CSS but Cannot See the Change
 
 Refresh the browser. If the old CSS still appears, use a hard refresh such as:
 
@@ -630,58 +649,80 @@ Ctrl + F5
 
 ---
 
-# 15. M-Pesa / Daraja integration status
+# 15. M-Pesa / Daraja Integration
 
-The current project does **not** make real M-Pesa payments. The exit page currently simulates the payment and barrier-opening process.
+NexaPark integrates with the **Safaricom M-Pesa Daraja API** to support payment processing through M-Pesa STK Push.
 
-A future M-Pesa Daraja integration can replace the simulated `/pay` step with a real payment workflow, for example:
+The integration is used for:
+
+- Pre-booking deposits
+- Remaining parking and valet balances at vehicle exit
+- M-Pesa payment status tracking
+- Daraja callback confirmation
+- Recording confirmed transactions in the database
+
+## M-Pesa Payment Workflow
 
 ```text
-Vehicle Exit
-     ↓
-Calculate parking fee
-     ↓
-Request M-Pesa payment
-     ↓
-Customer completes payment
-     ↓
-Daraja callback confirms payment
-     ↓
-Record payment in database
-     ↓
-Open/authorize exit barrier
+Customer selects payment
+        ↓
+NexaPark calculates amount due
+        ↓
+NexaPark requests an M-Pesa STK Push
+        ↓
+Customer completes payment on the M-Pesa device
+        ↓
+Safaricom sends a callback to NexaPark
+        ↓
+NexaPark verifies and records the transaction
+        ↓
+Payment status is updated
+        ↓
+Booking or parking session is completed
 ```
 
-The exact Daraja implementation will depend on the Safaricom API credentials, callback URL and deployment environment being used.
+During local development, the Daraja callback endpoint can be exposed using an HTTPS ngrok tunnel.
 
 ---
 
-# 16. Current implementation scope
+# 16. Current Implementation Scope
 
-NexaPark is a working local software system for managing parking operations, bookings, valet workflows, administration, payments records and reporting.
+NexaPark is a working local software system for managing:
 
-Some **external integrations are intentionally simulated or not yet connected to physical infrastructure** in the current software version:
+- Parking operations
+- Online bookings
+- Valet workflows
+- Administration
+- Payment records
+- M-Pesa payment processing
+- Reporting
 
-- Real M-Pesa/Daraja payment gateway
+The following physical or production infrastructure is not currently connected to the software:
+
 - Physical parking barrier controller
 - Physical bay-occupancy sensors
 - License-plate recognition cameras
 - Production hosting/infrastructure
 
-The fact that an external integration is simulated does not mean the parking-management application itself is only a mock-up. The implemented Flask application provides the software workflows that can later be connected to those external services and devices.
+The implemented Flask application provides the software workflows that can later be connected to physical parking equipment and production infrastructure.
 
 ---
 
-# 17. Quick-start summary
+# 17. Quick-Start Summary
 
 ### Windows PowerShell
 
 ```powershell
 cd path\to\modern-car-parking-system
+
 python -m venv .venv
+
 .\.venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
+
 flask --app app.py create-admin
+
 python app.py
 ```
 
@@ -689,10 +730,15 @@ python app.py
 
 ```bash
 cd /path/to/modern-car-parking-system
+
 python3 -m venv .venv
+
 source .venv/bin/activate
+
 pip install -r requirements.txt
+
 flask --app app.py create-admin
+
 python app.py
 ```
 
@@ -708,9 +754,9 @@ For the admin area:
 http://127.0.0.1:5000/admin/login
 ```
 
-## Valet and pre-booking payments
+## Valet and Pre-Booking Payments
 
-Pre-bookings now use a 50% M-Pesa deposit flow:
+Pre-bookings use a **50% M-Pesa deposit flow**:
 
 1. The customer selects arrival/departure times and optionally adds valet service.
 2. Parking is priced from the selected duration.
@@ -719,14 +765,12 @@ Pre-bookings now use a 50% M-Pesa deposit flow:
 5. The booking remains `PENDING_PAYMENT` until Daraja confirms the deposit.
 6. After confirmation it becomes `CONFIRMED` and the customer can check in with the same plate.
 7. If valet was selected, the check-in automatically creates a valet request.
-8. At exit, the system calculates the actual parking + valet total and subtracts the deposit already paid. Only the remaining balance is sent to M-Pesa.
+8. At exit, the system calculates the actual parking and valet total and subtracts the deposit already paid. Only the remaining balance is sent to M-Pesa.
 
 Unpaid booking attempts expire after 15 minutes. Confirmed bookings that pass their end time without check-in become `NO_SHOW`.
 
-### M-Pesa callback
+### M-Pesa Callback
 
-`MPESA_CALLBACK_URL` must be a publicly reachable HTTPS URL ending in `/mpesa/callback`. Daraja callbacks are used to confirm booking deposits and final parking-balance payments.
+`MPESA_CALLBACK_URL` must be a publicly reachable HTTPS URL ending in `/mpesa/callback`.
 
-Do not commit `.env` to source control. Use `.env.example` as the configuration template.
-#   N e x a P a r k - S y s t e m  
- 
+Daraja callbacks are used to confirm booking deposits and final parking-balance payments.
