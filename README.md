@@ -774,3 +774,44 @@ Unpaid booking attempts expire after 15 minutes. Confirmed bookings that pass th
 `MPESA_CALLBACK_URL` must be a publicly reachable HTTPS URL ending in `/mpesa/callback`.
 
 Daraja callbacks are used to confirm booking deposits and final parking-balance payments.
+
+## Environment File
+
+NexaPark can also use a `.env` file to store local environment variables and sensitive configuration.
+
+The `.env` file may contain values such as:
+
+- Application secret key
+- M-Pesa/Daraja consumer key
+- M-Pesa/Daraja consumer secret
+- M-Pesa shortcode
+- M-Pesa passkey
+- M-Pesa callback URL
+- Other environment-specific configuration values required by the application
+
+Example:
+
+````text
+NEXAPARK_SECRET_KEY=replace-with-a-long-random-secret
+
+MPESA_CALLBACK_URL=https://your-public-domain/mpesa/callback## Environment File
+
+NexaPark can also use a `.env` file to store local environment variables and sensitive configuration.
+
+The `.env` file may contain values such as:
+
+- Application secret key
+- M-Pesa/Daraja consumer key
+- M-Pesa/Daraja consumer secret
+- M-Pesa shortcode
+- M-Pesa passkey
+- M-Pesa callback URL
+- Other environment-specific configuration values required by the application
+
+Example:
+
+```text
+NEXAPARK_SECRET_KEY=replace-with-a-long-random-secret
+
+MPESA_CALLBACK_URL=https://your-public-domain/mpesa/callback
+````
